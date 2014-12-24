@@ -1,0 +1,49 @@
+<html>
+	<head>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script>
+        var searchAlbums = function (query) {
+  		$.ajax({
+    	url: 'https://api.spotify.com/v1/search',
+        data: {
+            q: query,
+            type: 'album'
+        },
+        success: function (response) {
+           
+            $("#data").html("<div><img src='" + response.albums.items[0].images[0].url +"' height='300px' width='300px'></img> <p>" + response.albums.items[0].name + "</p></div>");
+            
+        }
+    	});
+		};
+
+		
+        </script>
+	    <style>
+	    body {
+	    padding: 20px;
+		}
+		#search-form, .form-control {
+	    margin-bottom: 20px;
+		}
+		</style>
+	</head>
+	<body>
+		<div id="search-container">
+    		<h1>Search for an Artist</h1>
+    		<form id="search-form">
+        		<input type="text" id="query" value=""  />
+        		<input type="submit" id="search" value="Search" />
+    		</form>
+   			<div id="results"></div>
+		</div>
+		<div id="data" style="display:inline-block"></div>
+	</body>
+
+	<script>
+	document.getElementById('search-form').addEventListener('submit', function (e) {
+    	e.preventDefault();
+    	searchAlbums(document.getElementById('query').value);
+		}, false);
+	</script>
+</html>
